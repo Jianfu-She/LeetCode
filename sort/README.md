@@ -17,7 +17,7 @@
   时间复杂度：O(N*N) <br/>
   空间复杂度：O(1) <br/>
   稳定性：稳定 <br/>
-  ![图示](https://github.com/Jianfu-She/LeetCode/blob/master/sort/pic/InsertSort.gif) <br/>
+  ![图示](https://github.com/Jianfu-She/LeetCode/blob/master/sort/pic/InsertionSort.gif) <br/>
 4. [归并排序](https://github.com/Jianfu-She/LeetCode/tree/master/sort/MergeSort.java) <br/>
   该排序算法与数组原始序列无关。<br/>
   时间复杂度：O(N*logN) <br/>
