@@ -7,7 +7,7 @@
  *          Note that the answer must be a substring, "pwke" is a subsequence and not a substring.
  */
 
- Class Solution {
+ class Solution {
      public int lengthOfLongestSubstring(String s) {
         int length = 0, i = 0;
         Map<Character, Integer> map = new HashMap<>();
