@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>社区信息</title>
+<link rel="stylesheet"
+	href="../../common/plugin/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css"
+	href="../../common/plugin/bootstrap/css/bootstrap-table.css">
+<link rel="stylesheet"
+	href="../../common/plugin/bootstrap/css/bootstrap-datetimepicker.min.css" />
+<link rel="stylesheet" type="text/css" href="../../common/css/hyjn.css">
+<link rel="stylesheet"
+	href="../../common/dist/css/skins/_all-skins.min.css">
+<link rel="stylesheet" href="../../common/css/default.css">
+<link rel="stylesheet" href="../../common/dist/css/AdminLTE.min.css">
+<link rel="stylesheet"
+	href="../../common/plugin/font-awesome/css/font-awesome.min.css">
+
+<script type="text/javascript"
+	src="../../common/plugin/jQuery/jquery.min.js"></script>
+<script type="text/javascript"
+	src="../../common/plugin/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../../common/dist/js/app.min.js"></script>
+<script type="text/javascript"
+	src="../../common/plugin/bootstrap/js/alert-dialog.js"></script>
+<script type="text/javascript"
+	src="../../common/plugin/bootstrap/js/bootstrap-paginator.js"></script>
+<script type="text/javascript"
+	src="../../common/plugin/bootstrap/js/bootstrap-table.js"></script>
+<script type="text/javascript"
+	src="../../common/plugin/bootstrap/js/bootstrap-treeview.min.js"></script>
+<script type="text/javascript"
+	src="../../common/plugin/bootstrap/js/bootstrap-table-zh-CN.js"></script>
+<script type="text/javascript"
+	src="../../common/plugin/bootstrap/js/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript"
+	src="../../common/plugin/bootstrap/js/bootstrap-datetimepicker.zh-CN.js"></script>
+<script type="text/javascript" src="../../common/js/imgDo.js"></script>
+<script type="text/javascript" src="../../common/js/validate.js"></script>
+<script type="text/javascript" src="../../common/js/hyjn.js"></script>
+
+</head>
+<div class="wrapper">
+	<div style="height: 650px">
+		<div class="searchWrapper" style="height: 45px">
+			<form class="form-inline">
+				<div>
+					<div class="input-group" style="width: 250px; float: right;">
+						<input id="dept_search_deptname" placeholder="请输入社区名称"
+							type="text" class="form-control" /> <span
+							class="input-group-addon" onclick="dept_searchByUsername()"><i
+							class="glyphicon glyphicon-search"></i></span>
+					</div>
+				</div>
+			</form>
+		</div>
+		<form class="form-inline" style="padding: 5px">
+			<div class="form-group">
+				<button class="btn addBtn2" type="button" onclick="addUserM('add')">新增</button> <button
+				id="deptM_edit_btn"	type="button" class="btn addBtn2" onclick="addUserM('edit')">编辑</button> <button
+				id="deptM_del_btn" type="button"	class="btn deleteBtn2" onclick="deptM_delete()">删除</button>
+			</div>
+		</form>
+
+		<div style="padding: 5px"></div>
+<!-- 		表格及分页开始 -->
+		<div class="form-group" align="center">
+			<table data-height="430"
+				class="table table-bordered table-hover table-striped"
+				id="deptTable">
+			</table>
+		</div>
+
+
+<!-- 		分页开始  -->
+		<span>共 <a id="deptM_count" class="page_total_span"></a>
+			条
+		</span>
+
+		<div align="center">
+			<div class="form-inline">
+				<div class="form-group">
+					<ul id="dept_pagination">
+					</ul>
+				</div>
+				<div class="form-group"
+					style="margin-left: 5px; margin-bottom: 5px;">
+					每页 <select class="page_select" onchange="deptM_maxshow()"
+						id="deptM_pageSize">
+						<option value="10">10</option>
+						<option value="20">20</option>
+						<option value="50">50</option>
+					</select>行
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--新增用户弹框开始-->
+	<div class="modal fade" id="deptM_add_Modal" style="overflow: auto;" data-backdrop="false">
+		<div class="modal-dialog"style="width:700px;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<div class="modal-title h4" ><b id="myModalLabel">新增社区</b></div>
+				</div>
+				<div class="modal-body"style="height:150px">
+					<form id="deptM_addForm">
+						<input id="deptM_id" class="form-control" name="department.id"
+							style="display: none" type="text" />
+						<div class="row" style="margin-top: 10px;">
+							<div class="col-xs-6">
+								<label class="col-xs-4 control-label" style="width: 110px;margin-top: 5px;">社区名称:<span class="mustspan" style="color:red; font-size:16px;">*</span></label>
+								<div class="col-xs-7">
+									<input class="form-control validate" id="deptM_deptname"
+										name="department.dname" />
+								</div>
+							</div>
+							<div class="col-xs-6">
+								<label class="col-xs-4 control-label"style="width: 110px;margin-top: 5px;">联系电话:<span class="mustspan" style="color:red; font-size:16px;">*</span></label>
+								<div class="col-xs-7">
+									<input class="form-control validate telephone" id="deptM_tel" name="department.tel" />
+								</div>
+							</div>
+						</div>
+						<div class="from-group" style="margin-top: 10px;">
+							<label class="col-xs-2 control-label" style="width: 110px;margin-top: 5px;">地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址:</label>
+							<div class="col-xs-10">
+								<input name="department.address" style="width: 95.7%;" id="deptM_address"
+									class="form-control" />
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" style="width:70px; height:40px;" class="btn btn-success"
+						onclick="deptM_save()">
+						<span > 保存</span>
+					</button>&nbsp;&nbsp;&nbsp;&nbsp;
+					<button type="button" style="width:70px; height:40px;" class="btn btn-default" data-dismiss="modal">
+						<span > 取消</span>
+					</button>
+
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal -->
+	</div>
+	</body>
+	<!--新增用户弹框结束-->	
+<script type="text/javascript">
+	var deptM_pageNo = 1;/* 当前页数 */
+	var deptM_pageSize = 10;/* 一页显示多少条 */
+	var dept_rows;//选中行
+	var dept_id;//选中行id
+	var deptM_pageNum=1;//当前页只有一条数据删除后的页码处理
+	var deptM_add_Flag=0;
+	/* 初始化用户信息表格方法 */
+	$(function() {
+		$('#deptTable').bootstrapTable({
+			columns : [ {
+				field : 'index',
+				title : '序号'
+			}, {
+				field : 'dname',
+				title : '社区名称',
+			}, {
+				field : 'tel',
+				title : '联系电话',
+			}, {
+				field : 'address',
+				title : '地址',
+			}],
+			onClickRow : function(row, $element, field) {
+				tableSelect($element);
+				dept_rows = row;
+				dept_id=row.id;
+				deptM_getmsg(row);	
+			}
+		});
+			deptM_list(1, deptM_pageSize);
+		
+		})
+			/* 每页显示行数 */
+	function deptM_maxshow(){
+		deptM_pageSize =$("#deptM_pageSize").val();
+		deptM_list(1, deptM_pageSize);
+ 	}
+	/* 用户信息列表 */
+		function deptM_list(pageNo, pageSize) {
+			var list = new Array();
+			var name = $('#dept_search_deptname').val();
+			var param = "page.pageNo=" + pageNo + "&page.pageSize=" + pageSize
+					+ "&department.dname=" + name;
+			var count = 0;
+			waiting();
+			$.ajax({
+				type : "POST",
+				dataType : "json",
+				url : "dept_listAll.action",
+				data : param,
+				success : function(data) {
+					waiting('close');	//进度条隐藏
+					if (data != null) {
+						var d = eval("[" + data + "]");
+						if (d.length > 1) {
+							if (d.length == 3) {
+								//表格数据加载，及分页显示
+								count = d[2].total;
+								list = d[0].list;
+								if(count!=0){
+									$("#deptM_edit_btn").removeClass(" btn-default").addClass(" addBtn2");
+									$("#deptM_del_btn").removeClass(" btn-default").addClass(" deleteBtn2");
+									$("#deptM_edit_btn").removeAttr("disabled");
+									$("#deptM_del_btn").removeAttr("disabled");
+									}else{
+										$("#deptM_edit_btn").removeClass(" addBtn2").addClass(" btn-default");
+										$("#deptM_del_btn").removeClass(" deleteBtn2").addClass(" btn-default");
+					     				$("#deptM_edit_btn").attr("disabled","disabled");
+					     				$("#deptM_del_btn").attr("disabled","disabled");
+									}
+							}
+						} else {
+							Ewin.alert("网络繁忙，请稍后再试！");
+						}
+						$("#deptM_count").html(count);
+						//通过计算，得到分页应该需要分几页，其中不满一页的数据按一页计算
+						if (count % pageSize != 0) {
+							pageCount = count / pageSize + 1;
+						} else {
+							pageCount = count / pageSize;
+						}
+						if(count>0){
+							var options = {
+								bootstrapMajorVersion : 3, //版本
+								numberOfPages : 5,//一页显示几个按钮（在ul里面生成5个li）  
+								totalPages : pageCount,//总页数  
+								onPageClicked : function(event, originalEvent,
+										type, page) {
+									deptM_pageNo=page;
+									deptM_pageNum=page;
+									deptM_list(page, deptM_pageSize);
+								}
+						};
+						$('#dept_pagination').bootstrapPaginator(options);
+					}else{
+						$('#dept_pagination').html("");
+					}
+					}
+					$("#deptTable").bootstrapTable('load', list);
+					if(pageNo==1 && count>0){
+						$('#dept_pagination').bootstrapPaginator("showFirst"); 
+					}
+					 	dept_rows = tableSelectFirst('deptTable');
+					 	deptM_getmsg(dept_rows);
+				}
+			});
+		}
+	/* 通过用户昵称查询 */
+		function dept_searchByUsername() {
+			deptM_pageNo=1;
+			deptM_list(1, deptM_pageSize);
+		}
+		/* 弹窗处理 */
+		function addUserM(flag) {
+			if (flag == "add") {
+				$("#myModalLabel").html("新增社区");
+				$("#dept_search_deptname").val("");
+				$('#deptM_addForm')[0].reset();
+				deptM_add_Flag = 0;
+				$("#deptM_id").val("-278");
+			} else if (flag == "edit") {
+				$("#myModalLabel").html("编辑社区信息");
+				deptM_edit_getmsg(dept_rows);
+				deptM_add_Flag = 1;
+			}
+			$("#deptM_add_Modal").modal('show');		
+			validateForm("deptM_addForm");//由于js代码无法触发input框时间，所以手动调用方法进行校验，每次打开页面都要执行。参数为form表单id，下同
+		}
+		/*
+		 *	新增或编辑用户信息
+		 */
+		function deptM_save() {		
+			var formParam = $("#deptM_addForm").serialize();
+			waiting();
+			$.ajax({
+				type : "POST",
+				data : formParam,
+				url :  "dept_saveDepartment.action",
+				dataType : "json",
+				success : function(data) {
+					waiting('close');	//进度条隐藏
+					var d = eval("[" + data + "]");
+						if (d[0].msg.indexOf("success") > -1) {
+							if (deptM_add_Flag == 0) {
+								Ewin.alert("添加成功");
+								deptM_list(1, deptM_pageSize);
+								deptM_pageNo=1;
+							} else {
+								Ewin.alert("更新成功 ");
+								deptM_list(deptM_pageNo, deptM_pageSize);
+							}
+							$('#deptM_add_Modal').modal('hide');
+						
+						} else {
+							Ewin.alert("网络繁忙，请稍后再试！");
+						}
+					} 
+			});
+			}
+		/* 编辑框回显信息 */
+		function deptM_edit_getmsg(row) {
+			dept_id = row.id;
+ 			var address = row.address;
+			var tel = row.tel;
+			var deptname = row.dname;
+			$("#deptM_id").val(dept_id);
+ 			$("#deptM_address").val(address);
+			$("#deptM_tel").val(tel);
+			$("#deptM_deptname").val(deptname);
+		}
+		/* 删除用户信息 */
+		function deptM_delete() {
+			dept_id=dept_rows.id;
+			console.log(dept_id)
+			Ewin.confirm({
+				message : "确认要删除选择的数据吗？"
+			}).on(
+					function(e) {
+						if (!e) {
+							return;
+						}
+						waiting();
+						$.ajax({
+							type : 'post',
+							url : 'dept_delete.action',
+							data : {
+								"dept.id" : dept_id
+							},
+							dataType : 'json',
+							success : function(data) {
+							    console.log(data);
+								var d = eval("[" + data + "]");
+								if (d[1].msg.indexOf("success") > -1) {		
+									waiting('close');	//进度条隐藏
+										if (d.length == 2) {
+											//表格数据加载，及分页显示
+											del_flag = d[0].del_flag;
+										}
+									//判断当前页只有一条记录的删除操作
+									var rows = $("#deptTable").bootstrapTable('getData');
+									if(rows.length==1 && rows[0].id==dept_id && deptM_pageNum>1){
+										deptM_pageNum -= 1; 
+										$('#dept_pagination').bootstrapPaginator("showPrevious");
+									}
+										Ewin.alert("删除成功");	
+										deptM_list(deptM_pageNum,deptM_pageSize);
+									
+								} else {
+									Ewin.alert("网络繁忙，请稍后再试！");
+								}
+							}
+						});
+					});
+		}
+</script>
+
+</html>
